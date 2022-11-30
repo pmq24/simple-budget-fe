@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom/client';
 import reportWebVitals from './reportWebVitals';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import SignUpPage from './pages/SignUpPage';
+import NewGroupPage from './pages/NewGroupPage';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -10,6 +11,15 @@ const router = createBrowserRouter([
   {
     path: '/sign-up',
     element: <SignUpPage />,
+  },
+  {
+    path: '/groups/new',
+    children: [
+      {
+        path: '/groups/new',
+        element: <NewGroupPage />,
+      },
+    ],
   },
 ]);
 
