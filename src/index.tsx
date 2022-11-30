@@ -6,11 +6,16 @@ import SignUpPage from './pages/SignUpPage';
 import NewGroupPage from './pages/NewGroupPage';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import LogInPage from './pages/LogInPage';
 
 const router = createBrowserRouter([
   {
     path: '/sign-up',
     element: <SignUpPage />,
+  },
+  {
+    path: '/log-in',
+    element: <LogInPage />,
   },
   {
     path: '/groups/new',
