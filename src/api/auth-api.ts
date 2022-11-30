@@ -8,8 +8,12 @@ import { UserCreation } from '../schemas/UserCreation';
 export class AuthApi {
   constructor(private readonly axios: Axios) {}
 
-  public async signUp(data: UserCreation): Promise<User> {
-    return (await this.axios.post('/sign-up', data)).data;
+  public async signUp(data: UserCreation): Promise<ServerResponse<User>> {
+    try {
+      return (await this.axios.post('/sign-up', data)).data;
+    } catch (err) {
+      throw new ServerError(err);
+    }
   }
 
   public async logIn(data: LogInData): Promise<ServerResponse<User>> {

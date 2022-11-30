@@ -12,9 +12,12 @@ import useApi from '../components/ApiContext';
 import SBTextField from '../components/SBTextField';
 import { UserCreation, UserCreationSchema } from '../schemas/UserCreation';
 import { toast } from 'react-toastify';
+import ServerError from '../schemas/ServerError';
+import { useNavigate } from 'react-router-dom';
 
 export default function SignUpPage() {
   const api = useApi();
+  const navigate = useNavigate();
   const [isCreating, setCreating] = useState(false);
 
   return (
@@ -25,23 +28,21 @@ export default function SignUpPage() {
         confirmPassword: '',
       }}
       validationSchema={UserCreationSchema}
-      onSubmit={(formData) => {
+      onSubmit={async (formData) => {
         setCreating(true);
-        setTimeout(() => {
-          api.auth
-            .signUp(formData)
-            .then(() => {
-              toast.info('Welcome <name>!');
-            })
-            .catch(() => {
-              toast.error(
-                'Oh no! Aliens has invaded the earth and destroyed out server!'
-              );
-            })
-            .finally(() => {
-              setCreating(false);
-            });
-        }, 3000);
+        try {
+          const res = await api.auth.signUp(formData);
+          toast.info(`Signed up successfully as ${res.data.email}!`);
+
+          await api.auth.logIn(formData);
+          toast.info(`Logged in successfully as ${res.data.email}!`);
+
+          navigate('/transactions');
+        } catch (error) {
+          throw new ServerError(error);
+        } finally {
+          setCreating(false);
+        }
       }}
     >
       <Form>
