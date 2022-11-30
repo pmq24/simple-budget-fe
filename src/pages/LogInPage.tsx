@@ -8,6 +8,7 @@ import {
 } from '@mui/material';
 import { Form, Formik } from 'formik';
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import useApi from '../components/ApiContext';
 import SBTextField from '../components/SBTextField';
@@ -15,6 +16,7 @@ import { LogInData, LogInDataSchema } from '../schemas/LogInData';
 
 export default function LogInPage() {
   const api = useApi();
+  const navigate = useNavigate();
   const [isLoggingIn, setLoggingIn] = useState(false);
 
   return (
@@ -25,7 +27,10 @@ export default function LogInPage() {
         setLoggingIn(true);
         api.auth
           .logIn(formData)
-          .then(() => toast.info(`Logged in successfully!`))
+          .then(() => {
+            toast.info(`Logged in successfully!`);
+            navigate('/transactions');
+          })
           .catch((error) => toast.error(error.message))
           .finally(() => setLoggingIn(false));
       }}
