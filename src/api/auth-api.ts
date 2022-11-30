@@ -23,4 +23,12 @@ export class AuthApi {
       throw new ServerError(err);
     }
   }
+
+  public async getProfile(): Promise<ServerResponse<User>> {
+    try {
+      return (await this.axios.get('/me')).data;
+    } catch (err) {
+      throw new ServerError(err);
+    }
+  }
 }
