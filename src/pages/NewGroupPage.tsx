@@ -1,4 +1,4 @@
-import { Container, MenuItem, Stack, Typography } from '@mui/material';
+import { Button, Container, MenuItem, Stack, Typography } from '@mui/material';
 import { Form, Formik } from 'formik';
 import SBTextField from '../components/SBTextField';
 import { GroupCreation, GroupCreationSchema } from '../schemas/GroupCreation';
@@ -25,6 +25,9 @@ export default function NewGroupPage() {
                 </MenuItem>
               ))}
             </SBTextField>
+            <Button type="submit" variant="contained">
+              Create
+            </Button>
           </Stack>
         </Form>
       </Formik>
